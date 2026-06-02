@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Device : Redmi note 13 pro/Poco X6 (garnet) -->
+<manifest>
+    <!-- fetching sources -->
+    <remote name="CosmicCoreX" fetch="https://github.com/CosmicCoreX" revision="lineage-23.2" />
+    <remote name="lineage" fetch="https://github.com/LineageOS" revision="lineage-23.2" />
+    <remote name="loonage" fetch="https://gitlab.com/loonage" revision="lineage-23.2" />
+
+    <!-- Device -->
+    <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lineage-23.2" />
+
+    <!-- Kernel -->
+    <project remote="lineage" name="android_kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="lineage-23.2" />
+
+    <!-- Kernel Module -->
+    <project remote="lineage" name="android_kernel_xiaomi_sm7435-modules" path="kernel/xiaomi/sm7435-modules" revision="lineage-23.2" />
+
+    <!-- Kernel Tree -->
+    <project remote="lineage" name="android_kernel_xiaomi_sm7435-devicetrees" path="kernel/xiaomi/sm7435-devicetrees" revision="lineage-23.2" />
+
+    <!-- Vendor -->
+    <project remote="CosmicCoreX" name="vendor_xiaomi_garnet" path="vendor/xiaomi/garnet" revision="bkl" />
+
+    <!-- Miui Camera -->
+    <project remote="CosmicCoreX" name="device_xiaomi_garnet-miuicamera" path="device/xiaomi/garnet-miuicamera" revision="bkl" />
+
+    <!-- Miui Camera Vendor -->
+    <project remote="loonage" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="lineage-22.2" />
+
+    <!-- Hardware -->
+    <project remote="lineage" name="android_hardware_xiaomi" path="hardware/xiaomi" revision="lineage-23.2" />
+
+    <!--Dolby -->
+    <project remote="CosmicCoreX" name="android_packages_apps_LunarisDolby" path="hardware/dolby" revision="16" />
+</manifest>
