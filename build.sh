@@ -106,6 +106,63 @@ function tg_post_msg() {
     -d text="$1" > /dev/null
 }
 
+function tg_edit_msg() {
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/editMessageText" \
+    -d chat_id="$CHAT_ID" \
+    -d message_id="$1" \
+    -d parse_mode="Markdown" \
+    -d disable_web_page_preview="true" \
+    -d text="$2" > /dev/null
+}
+
+function tg_send_file() {
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+    -F chat_id="$CHAT_ID" \
+    -F document=@"$1" \
+    -F caption="$2" > /dev/null
+}
+
+function tg_get_msg_id() {
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+    -d chat_id="$CHAT_ID" \
+    -d parse_mode="Markdown" \
+    -d disable_web_page_preview="true" \
+    -d text="$1" | jq -r '.result.message_id'
+}
+
+STICKER_ID="CAACAgIAAxkBAAFHPGBp3vv2alKfVBQ4v7AaHPF97GMSKAACGTEAArx_wUuGnBCRzvYJbTsE"
+
+function tg_sticker() {
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendSticker" \
+    -d sticker="$STICKER_ID" \
+    -d chat_id="$CHAT_ID" > /dev/null
+}
+
+function get_stats() {
+  read -r _ u1 n1 s1 i1 w1 irq1 sirq1 st1 _ < /proc/stat
+  sleep 1
+  read -r _ u2 n2 s2 i2 w2 irq2 sirq2 st2 _ < /proc/stat
+
+  idle1=$((i1 + w1))
+  idle2=$((i2 + w2))
+
+  total1=$((u1 + n1 + s1 + i1 + w1 + irq1 + sirq1 + st1))
+  total2=$((u2 + n2 + s2 + i2 + w2 + irq2 + sirq2 + st2))
+
+  diff_idle=$((idle2 - idle1))
+  diff_total=$((total2 - total1))
+
+  local CPU=0
+  if [ "$diff_total" -gt 0 ]; then
+    CPU=$(( 100 * (diff_total - diff_idle) / diff_total ))
+  fi
+
+  MEM_USED=$(free -m | awk '/Mem:/ {print $3}')
+  MEM_TOTAL=$(free -m | awk '/Mem:/ {print $2}')
+  LOAD=$(cut -d' ' -f1 /proc/loadavg)
+  echo "$CPU|$MEM_USED|$MEM_TOTAL|$LOAD"
+}
+
 GOFILE_RETRY_MAX=6
 
 function gofile_upload() {
