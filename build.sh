@@ -201,6 +201,95 @@ function gofile_upload() {
   return 1
 }
 
+function tg_send_with_button() {
+  local TEXT="$1"
+
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+    -d chat_id="$CHAT_ID" \
+    -d parse_mode="Markdown" \
+    -d disable_web_page_preview="true" \
+    -d text="$TEXT" \
+    -d reply_markup='{
+      "inline_keyboard": [[
+        {"text": "🔄 Refresh Info", "callback_data": "refresh"}
+      ]]
+    }' | jq -r '.result.message_id'
+}
+
+function tg_edit_with_button() {
+  local MSG_ID="$1"
+  local TEXT="$2"
+
+  curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/editMessageText" \
+    -d chat_id="$CHAT_ID" \
+    -d message_id="$MSG_ID" \
+    -d parse_mode="Markdown" \
+    -d disable_web_page_preview="true" \
+    -d text="$TEXT" \
+    -d reply_markup='{
+      "inline_keyboard": [[
+        {"text": "🔄 Refresh Info", "callback_data": "refresh"}
+      ]]
+    }' > /dev/null
+}
+
+function listen_refresh() {
+  local OFFSET=0
+
+  while true; do
+    UPDATES=$(curl -s "https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${OFFSET}")
+    COUNT=$(echo "$UPDATES" | jq '.result | length')
+
+    if [ "$COUNT" -gt 0 ]; then
+      for ((i=0; i<COUNT; i++)); do
+        UPDATE=$(echo "$UPDATES" | jq -c ".result[$i]")
+
+        UPDATE_ID=$(echo "$UPDATE" | jq '.update_id')
+        OFFSET=$((UPDATE_ID + 1))
+
+        CALLBACK=$(echo "$UPDATE" | jq -r '.callback_query.data // empty')
+        MSG_ID=$(echo "$UPDATE" | jq -r '.callback_query.message.message_id // empty')
+
+        if [ "$CALLBACK" = "refresh" ]; then
+          CALLBACK_ID=$(echo "$UPDATE" | jq -r '.callback_query.id // empty')
+
+          curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery" \
+               -d callback_query_id="$CALLBACK_ID" > /dev/null
+
+          STATS=$(get_stats)
+          CPU=$(echo "$STATS" | cut -d'|' -f1)
+          MEM_USED=$(echo "$STATS" | cut -d'|' -f2)
+          MEM_TOTAL=$(echo "$STATS" | cut -d'|' -f3)
+          LOAD=$(echo "$STATS" | cut -d'|' -f4)
+
+          ELAPSED=$(( $(date +%s) - BUILD_START ))
+          CONSOLE=$(grep -v '^\s*$' "$LOG" 2>/dev/null | tail -n1 | cut -c1-110)
+          NOW_LOCAL=$(date +"%H:%M:%S")
+
+          tg_edit_with_button "$MSG_ID" "
+⚙️ *Building ${ROM_NAME}*
+
+📱 Device: \`${DEVICE}\`
+🏙️ *Build Type*: \`${BUILD_TYPE}\`
+
+*Server Stats*
+💻 CPU: \`${CPU}%\`
+💾 RAM: \`${MEM_USED}MB / ${MEM_TOTAL}MB\`
+⚡ Load: \`${LOAD}\`
+
+🕛 Elapsed: $(format_time "$ELAPSED")
+🔥 Status: Compiling...
+📟 Console: \`${CONSOLE}\`
+
+🔄 Last Refreshed: \`${NOW_LOCAL}\`"
+        fi
+      done
+    fi
+
+    sleep 2
+  done
+}
+
 ### =============== MAIN =====================
 
 clean
