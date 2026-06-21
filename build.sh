@@ -207,11 +207,31 @@ clean
 sync_sources
 setup_env
 
-### =============== BUILD ====================
+### =============== START MSG ================
 BUILD_START=$(date +%s)
+NOW=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+tg_sticker
 
+tg_post_msg "
+🤖 *${ROM_NAME} ${POS_VERSION}* Build Triggered for
+
+📱 *Device*: \`${DEVICE}\`
+🏙️ *Build Type*: \`${BUILD_TYPE}\`
+⌛ *Time*: \`${NOW}\`"
+
+PROGRESS_MSG_ID=$(tg_send_with_button "🚀 Initializing build...
+Tap 🔄 Refresh Info to refresh the stats!")
+
+listen_refresh &
+LISTENER_PID=$!
+
+### =============== BUILD ====================
 build_rom
 STATUS=$?
+
+
+kill "$LISTENER_PID" 2>/dev/null
+wait "$LISTENER_PID" 2>/dev/null
 
 BUILD_END=$(date +%s)
 TIME=$(( BUILD_END - BUILD_START ))
@@ -221,18 +241,27 @@ TIME_FMT=$(format_time "$TIME")
 
 if [ "$STATUS" -eq 0 ]; then
 
+  # Resolve GoFile server list once, reuse for all uploads
   mapfile -t GOFILE_SERVERS < <(curl -s "https://api.gofile.io/servers" | jq -r '.data.servers[].name')
 
   if [ "${#GOFILE_SERVERS[@]}" -eq 0 ]; then
     tg_post_msg "⚠️ Could not resolve any GoFile server. Uploads skipped."
-    exit 1
   fi
 
+  # FIX #7: Resolve ROM zip glob safely; abort early if no zip found
   mapfile -t ROM_ZIPS < <(compgen -G "$ROM_ZIP" 2>/dev/null)
   if [ "${#ROM_ZIPS[@]}" -eq 0 ]; then
     tg_post_msg "⚠️ Build reported success but no ROM zip found at \`${ROM_ZIP}\`. Check the build output."
     exit 1
   fi
+
+  tg_edit_msg "$PROGRESS_MSG_ID" "
+⚙️ *Building ${ROM_NAME}*
+
+📱 Device: \`${DEVICE}\`
+🔥 Status: ✅ Success
+🕛 Time: ${TIME_FMT}
+📦 Uploading build..."
 
   UPLOAD_MSG=""
   IMG_MSG=""
@@ -251,7 +280,13 @@ if [ "$STATUS" -eq 0 ]; then
   done
 
   ### ======== UPLOAD RECOVERY IMAGES ========
-  for IMG in "${COMMON_IMAGES[@]}"; do
+  if [ "$IS_ONEPLUS" = true ]; then
+    IMAGES_TO_UPLOAD=("${ONEPLUS_IMAGES[@]}")
+  else
+    IMAGES_TO_UPLOAD=("${COMMON_IMAGES[@]}")
+  fi
+
+  for IMG in "${IMAGES_TO_UPLOAD[@]}"; do
     FILEPATH="${OUT_DIR}/${IMG}"
     LINK=$(gofile_upload "$FILEPATH")
     if [ -n "$LINK" ]; then
@@ -276,11 +311,15 @@ if [ "$STATUS" -eq 0 ]; then
 
 $(echo -e "$UPLOAD_MSG")"
 
-  FINAL_MSG="${FINAL_MSG}
+  if [ -n "$IMG_MSG" ]; then
+    FINAL_MSG="${FINAL_MSG}
 
 🔧 *Recovery Images*
-$(echo -e "$IMG_MSG")
+$(echo -e "$IMG_MSG")"
+  fi
 
+  FINAL_MSG="${FINAL_MSG}
+  
 📋 *Device JSON*
 $(echo -e "$JSON_MSG")
 
@@ -288,5 +327,22 @@ $(echo -e "$JSON_MSG")
 🕛 Build Time: ${TIME_FMT}"
 
   tg_post_msg "$FINAL_MSG"
+
+else
+
+  tg_edit_msg "$PROGRESS_MSG_ID" "
+⚙️ *Building ${ROM_NAME}*
+
+📱 Device: \`${DEVICE}\`
+🔥 Status: ❌ Failed
+🕛 Time: ${TIME_FMT}"
+
+  if [ -f "out/error.log" ]; then
+    tg_send_file "out/error.log" "📜 Build Error Log — ${DEVICE}"
+  else
+    tail -n 120 "$LOG" > error_tail.log
+    tg_send_file "error_tail.log" "📜 Last 120 lines — ${DEVICE} (no out/error.log found)"
+    rm -f error_tail.log
+  fi
 
 fi
