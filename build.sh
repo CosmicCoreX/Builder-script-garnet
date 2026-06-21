@@ -33,7 +33,7 @@ set +o allexport
 
 ROM_NAME="Axion AOSP"
 DEVICE="garnet"
-BUILD_TYPE="user"
+BUILD_TYPE="userdebug"
 USER="@IamZeus14"
 
 COMMON_IMAGES=("recovery.img")
