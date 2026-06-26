@@ -11,7 +11,7 @@
     <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lineage-23.2" />
 
     <!-- Kernel -->
-    <project remote="lineage" name="android_kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="lineage-23.2" />
+    <project remote="CosmicCoreX" name="kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="lineage-23.2" />
 
     <!-- Kernel Module -->
     <project remote="lineage" name="android_kernel_xiaomi_sm7435-modules" path="kernel/xiaomi/sm7435-modules" revision="lineage-23.2" />
