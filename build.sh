@@ -31,7 +31,7 @@ set +o allexport
 
 ### ================= CONFIG =================
 
-ROM_NAME="Axion AOSP"
+ROM_NAME="Lunaris"
 DEVICE="garnet"
 BUILD_TYPE="user"
 USER="@IamZeus14"
@@ -53,7 +53,7 @@ function clean() {
 }
 
 function sync_sources() {
-  repo init -u https://github.com/AxionAOSP/android.git -b lineage-23.2 --git-lfs --depth=1
+  repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs --depth=1
   git clone https://github.com/iamzeus14/Builder-script -b main .repo/local_manifests
 
   if [ -f /opt/crave/resync.sh ]; then
@@ -70,7 +70,7 @@ function setup_env() {
   export BUILD_HOSTNAME=crave
 
   . build/envsetup.sh
-  axion "$DEVICE" "$BUILD_TYPE" gms
+  lunch lineage_"$DEVICE"-bp4a-"$BUILD_TYPE"
   mka installclean
 }
 
