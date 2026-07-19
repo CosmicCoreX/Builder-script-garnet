@@ -8,7 +8,7 @@
     <remote name="loonage" fetch="https://gitlab.com/loonage" revision="lineage-23.2" />
 
     <!-- Device -->
-    <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lineage-23.2" />
+    <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lunaris" />
 
     <!-- Kernel -->
     <project remote="CosmicCoreX" name="kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="lineage-23.2" />
