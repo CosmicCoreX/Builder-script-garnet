@@ -1,5 +1,5 @@
 ```
-cd axion && crave run --no-patch -- "curl https://raw.githubusercontent.com/iamzeus14/Builder-script/refs/heads/main/build.sh | bash"
+cd axion && crave run --no-patch -- "curl https://raw.githubusercontent.com/iamzeus14/Builder-script/refs/heads/lunaris/build.sh | bash"
 ```
 
 >**Special Thanks**
