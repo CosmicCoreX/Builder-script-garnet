@@ -40,7 +40,7 @@ COMMON_IMAGES=("recovery.img")
 OUT_DIR="out/target/product/${DEVICE}"
 LOG="build.log"
 OTA_JSON_FILE="${OUT_DIR}/GMS/${DEVICE}.json"
-ROM_ZIP="${OUT_DIR}/axion*.zip"
+ROM_ZIP="${OUT_DIR}/lunaris*.zip"
 
 ### ============================================== ###
 
