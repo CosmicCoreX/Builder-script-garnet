@@ -54,7 +54,7 @@ function clean() {
 
 function sync_sources() {
   repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs --depth=1
-  git clone https://github.com/iamzeus14/Builder-script -b main .repo/local_manifests
+  git clone https://github.com/iamzeus14/Builder-script -b lunaris .repo/local_manifests
 
   if [ -f /opt/crave/resync.sh ]; then
     /opt/crave/resync.sh
