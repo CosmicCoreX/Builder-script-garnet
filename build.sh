@@ -40,7 +40,7 @@ COMMON_IMAGES=("recovery.img")
 OUT_DIR="out/target/product/${DEVICE}"
 LOG="build.log"
 OTA_JSON_FILE="${OUT_DIR}/GMS/${DEVICE}.json"
-ROM_ZIP="${OUT_DIR}/lunaris*.zip"
+ROM_ZIP="${OUT_DIR}/Lunaris*.zip"
 
 ### ============================================== ###
 
@@ -49,6 +49,7 @@ ROM_ZIP="${OUT_DIR}/lunaris*.zip"
 function clean() {
   rm -rf .repo/local_manifests
   rm -rf {device,kernel,hardware,vendor}/xiaomi
+  rm -rf hardware/dolby
   rm -rf vendor/lineage-priv/keys
 }
 
