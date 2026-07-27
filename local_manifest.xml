@@ -5,7 +5,7 @@
     <!-- fetching sources -->
     <remote name="CosmicCoreX" fetch="https://github.com/CosmicCoreX" revision="lineage-23.2" />
     <remote name="lineage" fetch="https://github.com/LineageOS" revision="lineage-23.2" />
-    <remote name="loonage" fetch="https://gitlab.com/loonage" revision="lineage-23.2" />
+    <remote name="c0pt4n" fetch="https://gitlab.com/c0pt4n" revision="lineage-23.2" />
 
     <!-- Device -->
     <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lunaris" />
@@ -26,7 +26,7 @@
     <project remote="CosmicCoreX" name="device_xiaomi_garnet-miuicamera" path="device/xiaomi/garnet-miuicamera" revision="bkl" />
 
     <!-- Miui Camera Vendor -->
-    <project remote="loonage" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="lineage-22.2" />
+    <project remote="c0pt4n" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="lineage-23.0" />
 
     <!-- Hardware -->
     <project remote="lineage" name="android_hardware_xiaomi" path="hardware/xiaomi" revision="lineage-23.2" />
