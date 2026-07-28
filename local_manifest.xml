@@ -6,18 +6,19 @@
     <remote name="CosmicCoreX" fetch="https://github.com/CosmicCoreX" revision="lineage-23.2" />
     <remote name="lineage" fetch="https://github.com/LineageOS" revision="lineage-23.2" />
     <remote name="c0pt4n" fetch="https://gitlab.com/c0pt4n" revision="lineage-23.2" />
-
+    <remote name="evox" fetch="https://github.com/evolution-x-devices" revision="lineage-23.2" />
+    
     <!-- Device -->
     <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lunaris" />
 
     <!-- Kernel -->
-    <project remote="CosmicCoreX" name="kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="lineage-23.2" />
+    <project remote="CosmicCoreX" name="kernel_xiaomi_garnet" path="kernel/xiaomi/sm7435" revision="bka" />
 
     <!-- Kernel Module -->
-    <project remote="lineage" name="android_kernel_xiaomi_sm7435-modules" path="kernel/xiaomi/sm7435-modules" revision="lineage-23.2" />
+    <project remote="evox" name="kernel_xiaomi_garnet-modules" path="kernel/xiaomi/sm7435-modules" revision="bka" />
 
     <!-- Kernel Tree -->
-    <project remote="lineage" name="android_kernel_xiaomi_sm7435-devicetrees" path="kernel/xiaomi/sm7435-devicetrees" revision="lineage-23.2" />
+    <project remote="evox" name="kernel_xiaomi_garnet-devicetrees" path="kernel/xiaomi/sm7435-devicetrees" revision="bka" />
 
     <!-- Vendor -->
     <project remote="CosmicCoreX" name="vendor_xiaomi_garnet" path="vendor/xiaomi/garnet" revision="bkl" />
@@ -29,7 +30,7 @@
     <project remote="c0pt4n" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="lineage-23.0" />
 
     <!-- Hardware -->
-    <project remote="lineage" name="android_hardware_xiaomi" path="hardware/xiaomi" revision="lineage-23.2" />
+    <project remote="evox" name="hardware_xiaomi" path="hardware/xiaomi" revision="bka-no-dolby" />
 
     <!--Dolby -->
     <project remote="CosmicCoreX" name="android_packages_apps_LunarisDolby" path="hardware/dolby" revision="16" />
