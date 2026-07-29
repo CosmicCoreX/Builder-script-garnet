@@ -29,6 +29,9 @@ set -o allexport
 source .env
 set +o allexport
 
+# IST override for all date calls in this script
+export TZ="Asia/Kolkata"
+
 ### ================= CONFIG =================
 
 ROM_NAME="Lunaris"
