@@ -1,5 +1,5 @@
 ```
-cd lunaris && crave run --no-patch -- "curl hhttps://raw.githubusercontent.com/CosmicCoreX/Builder-script-garnet/refs/heads/lunaris/build.sh| bash"
+cd lunaris && crave run --no-patch -- "curl https://raw.githubusercontent.com/CosmicCoreX/Builder-script-garnet/refs/heads/lunaris/build.sh| bash"
 ```
 
 >**Special Thanks**
