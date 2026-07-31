@@ -167,6 +167,32 @@ function get_stats() {
   echo "$CPU|$MEM_USED|$MEM_TOTAL|$LOAD"
 }
 
+function get_progress_info() {
+  local LOG_FILE="$1"
+
+  # Parse Ninja/Soong progress lines: [ 45% 1234/2742]
+  local PROGRESS_LINE
+  PROGRESS_LINE=$(grep -o "\[ *[0-9]*% *[0-9]*/[0-9]*\]" "$LOG_FILE" 2>/dev/null | tail -n1)
+
+  if [ -n "$PROGRESS_LINE" ]; then
+    local PERCENT
+    PERCENT=$(echo "$PROGRESS_LINE" | grep -o "[0-9]*%" | tr -d '%')
+    local STEPS
+    STEPS=$(echo "$PROGRESS_LINE" | grep -o "[0-9]*/[0-9]*")
+
+    local FILLED=$(( PERCENT / 10 ))
+    local UNFILLED=$(( 10 - FILLED ))
+    local BAR=""
+
+    for ((i=0; i<FILLED; i++)); do BAR="${BAR}▓"; done
+    for ((i=0; i<UNFILLED; i++)); do BAR="${BAR}░"; done
+
+    echo "\`[${BAR}]\` *${PERCENT}%* (\`${STEPS}\`)"
+  else
+    echo "\`[░░░░░░░░░░]\` *0%* (\`Initializing...\`)"
+  fi
+}
+
 GOFILE_RETRY_MAX=6
 
 function gofile_upload() {
@@ -267,6 +293,7 @@ function listen_refresh() {
           LOAD=$(echo "$STATS" | cut -d'|' -f4)
 
           ELAPSED=$(( $(date +%s) - BUILD_START ))
+          PROGRESS_BAR=$(get_progress_info "$LOG")
           CONSOLE=$(grep -v '^\s*$' "$LOG" 2>/dev/null | tail -n1 | cut -c1-110)
           NOW_LOCAL=$(date +"%H:%M:%S")
 
@@ -284,6 +311,8 @@ function listen_refresh() {
 🕛 Elapsed: $(format_time "$ELAPSED")
 🔥 Status: Compiling...
 📟 Console: \`${CONSOLE}\`
+
+📊 Progress: ${PROGRESS_BAR}
 
 🔄 Last Refreshed: \`${NOW_LOCAL}\`"
         fi
