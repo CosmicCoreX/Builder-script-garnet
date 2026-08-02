@@ -7,7 +7,7 @@
     <remote name="lineage" fetch="https://github.com/LineageOS" revision="lineage-23.2" />
     <remote name="CosmicBotX" fetch="https://github.com/CosmicBotX" revision="lineage-23.2" />
     <remote name="PixelOS" fetch="https://github.com/CosmicBotX" revision="lineage-23.2" />
-    <remote name="PixelOS" fetch="https://gitlab.com/NoPrincessHere" revision="sixteen-qpr1" />
+    <remote name="NoPrincessHere" fetch="https://gitlab.com/NoPrincessHere" revision="sixteen-qpr1" />
 
     <!-- Device -->
     <project remote="CosmicBotX" name="android_device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lineage-23.1" />
