@@ -53,7 +53,7 @@ function clean() {
 }
 
 function sync_sources() {
-  repo init -u https://github.com/AxionAOSP/android.git -b lineage-23.2 --git-lfs --depth=1
+  repo init -u https://github.com/AxionAOSP/android.git -b lineage-23.1 --git-lfs --depth=1
   git clone https://github.com/iamzeus14/Builder-script -b main .repo/local_manifests
 
   if [ -f /opt/crave/resync.sh ]; then

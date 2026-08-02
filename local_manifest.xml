@@ -5,32 +5,33 @@
     <!-- fetching sources -->
     <remote name="CosmicCoreX" fetch="https://github.com/CosmicCoreX" revision="lineage-23.2" />
     <remote name="lineage" fetch="https://github.com/LineageOS" revision="lineage-23.2" />
-    <remote name="c0pt4n" fetch="https://gitlab.com/c0pt4n" revision="lineage-23.2" />
-    <remote name="evox" fetch="https://github.com/evolution-x-devices" revision="lineage-23.2" />
-    
+    <remote name="CosmicBotX" fetch="https://github.com/CosmicBotX" revision="lineage-23.2" />
+    <remote name="PixelOS" fetch="https://github.com/CosmicBotX" revision="lineage-23.2" />
+    <remote name="PixelOS" fetch="https://gitlab.com/NoPrincessHere" revision="sixteen-qpr1" />
+
     <!-- Device -->
-    <project remote="CosmicCoreX" name="device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lunaris" />
+    <project remote="CosmicBotX" name="android_device_xiaomi_garnet" path="device/xiaomi/garnet" revision="lineage-23.1" />
 
     <!-- Kernel -->
-    <project remote="CosmicCoreX" name="kernel_xiaomi_garnet" path="kernel/xiaomi/sm7435" revision="bka" />
+    <project remote="CosmicBotX" name="android_kernel_xiaomi_sm7435" path="kernel/xiaomi/sm7435" revision="sixteen-qpr1" />
 
     <!-- Kernel Module -->
-    <project remote="evox" name="kernel_xiaomi_garnet-modules" path="kernel/xiaomi/sm7435-modules" revision="bka" />
+    <project remote="PixelOS" name="android_kernel_xiaomi_sm7435-modules" path="kernel/xiaomi/sm7435-modules" revision="sixteen-qpr1" />
 
     <!-- Kernel Tree -->
-    <project remote="evox" name="kernel_xiaomi_garnet-devicetrees" path="kernel/xiaomi/sm7435-devicetrees" revision="bka" />
+    <project remote="PixelOS" name="android_kernel_xiaomi_sm7435-devicetrees" path="kernel/xiaomi/sm7435-devicetrees" revision="sixteen-qpr1" />
 
     <!-- Vendor -->
-    <project remote="CosmicCoreX" name="vendor_xiaomi_garnet" path="vendor/xiaomi/garnet" revision="bkl" />
+    <project remote="CosmicBotX" name="vendor_xiaomi_garnet" path="vendor/xiaomi/garnet" revision="sixteen-qpr1" />
 
     <!-- Miui Camera -->
-    <project remote="CosmicCoreX" name="device_xiaomi_garnet-miuicamera" path="device/xiaomi/garnet-miuicamera" revision="bkl" />
+    <project remote="PixelOS" name="android_device_xiaomi_garnet-miuicamera" path="device/xiaomi/garnet-miuicamera" revision="sixteen-qpr1" />
 
     <!-- Miui Camera Vendor -->
-    <project remote="c0pt4n" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="lineage-23.0" />
+    <project remote="NoPrincessHere" name="proprietary_vendor_xiaomi_garnet-miuicamera" path="vendor/xiaomi/garnet-miuicamera" revision="sixteen-qpr1" />
 
     <!-- Hardware -->
-    <project remote="evox" name="hardware_xiaomi" path="hardware/xiaomi" revision="bka-no-dolby" />
+    <project remote="lineage" name="android_hardware_xiaomi" path="hardware/xiaomi" revision="lineage-23.1" />
 
     <!--Dolby -->
     <project remote="CosmicCoreX" name="android_packages_apps_LunarisDolby" path="hardware/dolby" revision="16" />
