@@ -34,7 +34,7 @@ export TZ="Asia/Kolkata"
 
 ### ================= CONFIG =================
 
-ROM_NAME="Lunaris"
+ROM_NAME="Edith"
 DEVICE="garnet"
 BUILD_TYPE="user"
 USER="@IamZeus14"
@@ -43,7 +43,7 @@ COMMON_IMAGES=("recovery.img")
 OUT_DIR="out/target/product/${DEVICE}"
 LOG="build.log"
 OTA_JSON_FILE="${OUT_DIR}/GMS/${DEVICE}.json"
-ROM_ZIP="${OUT_DIR}/Lunaris*.zip"
+ROM_ZIP="${OUT_DIR}/Edith*.zip"
 
 ### ============================================== ###
 
@@ -57,8 +57,8 @@ function clean() {
 }
 
 function sync_sources() {
-  repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs --depth=1
-  git clone https://github.com/iamzeus14/Builder-script -b lunaris .repo/local_manifests
+  repo init -u https://github.com/Edith-AOSP/manifest -b 17.0 --git-lfs --depth=1
+  git clone https://github.com/iamzeus14/Builder-script -b edith .repo/local_manifests
 
   if [ -f /opt/crave/resync.sh ]; then
     /opt/crave/resync.sh
@@ -74,8 +74,8 @@ function setup_env() {
   export BUILD_HOSTNAME=crave
 
   . build/envsetup.sh
-  lunch lineage_"$DEVICE"-bp4a-"$BUILD_TYPE"
-  mka installclean
+  lunch edith_"$DEVICE"-cp2a-"$BUILD_TYPE"
+ mka edith -j$(nproc --all)
 }
 
 function build_rom() {
