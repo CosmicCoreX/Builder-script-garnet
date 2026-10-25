@@ -80,7 +80,7 @@ function setup_env() {
 
 function build_rom() {
   touch "$LOG"
-  m bacon 2>&1 | tee "$LOG" &
+  mka edith -j"$(nproc --all)" 2>&1 | tee "$LOG" &
   BUILD_PID=$!
 
   wait "$BUILD_PID"
