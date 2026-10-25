@@ -75,7 +75,7 @@ function setup_env() {
 
   . build/envsetup.sh
   lunch edith_"$DEVICE"-cp2a-"$BUILD_TYPE"
- mka edith -j$(nproc --all)
+ mka installclean
 }
 
 function build_rom() {
